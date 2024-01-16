@@ -5,7 +5,9 @@ package jdbc.config;
 
 
 import com.zaxxer.hikari.HikariDataSource;
+import jdbc.domain.model.Account;
 import jdbc.domain.model.Purchase;
+import jdbc.repository.AccountRowMapper;
 import jdbc.repository.PurchaseRowMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +19,11 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@ComponentScan(basePackages = {"jdbc.repository", "jdbc.service"})
+@ComponentScan(basePackages = {
+        "jdbc.repository",
+        "jdbc.service",
+        "jdbc.controller",
+        "jdbc.controller.advice"})
 class AppConfig {
 
     @Value("${yul.datasource.url}")
@@ -36,6 +42,11 @@ class AppConfig {
     @Bean
     RowMapper<Purchase> purchaseRowMapper() {
         return new PurchaseRowMapper();
+    }
+
+    @Bean
+    RowMapper<Account> accountRowMapper() {
+        return new AccountRowMapper();
     }
 
     @Bean
